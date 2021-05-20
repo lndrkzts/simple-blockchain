@@ -20,3 +20,8 @@ def starup():
 @app.get('/blockchain')
 async def get_chain():
     return blockchain.get_chain()
+
+
+@app.get('/block/{block_id}')
+async def get_block(block_id: int):
+    return blockchain.get_block(block_id)
