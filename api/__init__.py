@@ -25,3 +25,14 @@ async def get_chain():
 @app.get('/block/{block_id}')
 async def get_block(block_id: int):
     return blockchain.get_block(block_id)
+
+
+@app.post('/transaction')
+async def create_transaction(transaction: TransactionModel):
+    new_transaction = Transaction(sender=transaction.sender,
+                                  reciver=transaction.receiver,
+                                  amount=transaction.amount)
+    new_transaction.set_timestamp()
+    blockchain.add_transaction(new_transaction)
+
+    return new_transaction
