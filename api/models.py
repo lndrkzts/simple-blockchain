@@ -15,3 +15,17 @@ class Transaction:
     def set_timestamp(self):
         if not self.timestamp:
             self.timestamp = time.time()
+
+
+class Block:
+    def __init__(self, index: int, transactions: List, previous_hash: str, timestamp: float):
+        self.index = index
+        self.nounce = 0
+        self.hash = ''
+        self.transactions = transactions
+        self.previous_hash = previous_hash
+        self.timestamp = timestamp
+
+    def generate_hash(self):
+        block_string = json.dumps(self.__dict__, sort_keys=True)
+        return hashlib.sha256(block_string.encode()).hexdigest()
