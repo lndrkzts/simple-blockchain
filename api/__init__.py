@@ -36,3 +36,11 @@ async def create_transaction(transaction: TransactionModel):
     blockchain.add_transaction(new_transaction)
 
     return new_transaction
+
+
+@app.get('/blockchain/mine')
+async def mine():
+    block_index = blockchain.mine_block()
+    if not block_index:
+        return 'Need transactions to mine block'
+    return f'Block #{block_index} successfully mined'

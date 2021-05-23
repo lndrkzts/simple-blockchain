@@ -27,7 +27,7 @@ class Block:
         self.timestamp = timestamp
 
     def generate_hash(self):
-        block_string = json.dumps(self.__dict__, sort_keys=True)
+        block_string = json.dumps(self.__dict__, default=lambda o: o.__dict__, sort_keys=True)
         return hashlib.sha256(block_string.encode()).hexdigest()
 
 
@@ -96,16 +96,16 @@ class Blockchain:
         return True
 
     def mine_block(self):
-        if not self.unconfirmed_transaction:
+        if not self.unconfirmed_transactions:
             return False
 
         new_block = Block(index=self.last_block.index + 1,
-                          transactions=self.unconfirmed_transaction,
+                          transactions=self.unconfirmed_transactions,
                           timestamp=time.time(),
                           previous_hash=self.last_block.hash)
 
         proof = self.proof_of_work(new_block)
         self.add_block(new_block, proof)
-        self.unconfirmed_transaction = []
+        self.unconfirmed_transactions = []
 
         return new_block.index
