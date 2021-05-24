@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 To start the app we need to run
 ```sh
-uvicorn main:app --reset
+uvicorn main:app --reload
 ```
 ## Enpoints documentation
 
